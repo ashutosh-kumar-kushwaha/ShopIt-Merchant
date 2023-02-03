@@ -12,11 +12,11 @@ interface RetrofitAPI {
     //auth
 
     @Headers("isAuthorized: false")
-    @POST("api/auth/login")
+    @POST("api/auth/loginMerchant")
     suspend fun login(@Body loginRequest: LoginRequest) : Response<LoginResponse>
 
     @Headers("isAuthorized: false")
-    @POST("api/auth/signupEmail/user")
+    @POST("api/auth/signupEmail/merchant")
     suspend fun signUpEmail(@Body email : Email) : Response<DefaultResponse>
 
     @Headers("isAuthorized: false")
@@ -36,11 +36,11 @@ interface RetrofitAPI {
     suspend fun verifySignUpOtp(@Body verifySignUpOtpRequest: VerifyOtpRequest) : Response<DefaultResponse>
 
     @Headers("isAuthorized: false")
-    @POST("api/auth/signupUser/user")
+    @POST("api/auth/signupUser/merchant")
     suspend fun signUp(@Body signUpRequest: SignUpRequest) : Response<DefaultResponse>
 
     @Headers("isAuthorized: false")
-    @POST("api/auth/signGoogle")
+    @POST("api/auth/signGoogleMerchant")
     suspend fun signGoogle(@Query("TokenG") token : String) : Response<LoginResponse>
 
     @Headers("isAuthorized: false")

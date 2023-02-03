@@ -1,5 +1,6 @@
 package ashutosh.shopit.merchant.repository
 
+import android.util.Log
 import ashutosh.shopit.merchant.SingleLiveEvent
 import ashutosh.shopit.merchant.api.RetrofitAPI
 import ashutosh.shopit.merchant.api.NetworkResult
@@ -16,6 +17,7 @@ class SignUpRepository @Inject constructor(private val retrofitAPI: RetrofitAPI)
         signUpResponseLiveData.value = NetworkResult.Loading()
         try {
             val response = retrofitAPI.signUp(SignUpRequest(email, otp, firstName, lastName, gender, password))
+            Log.d("Ashu", SignUpRequest(email, otp, firstName, lastName, gender, password).toString())
             when(response.code()){
                 200 -> {
                     login(email, password)
@@ -23,7 +25,7 @@ class SignUpRepository @Inject constructor(private val retrofitAPI: RetrofitAPI)
                 401 -> signUpResponseLiveData.value = NetworkResult.Error(401, "Invalid OTP")
                 408 -> signUpResponseLiveData.value = NetworkResult.Error(408, "Session Time-out")
                 503 -> signUpResponseLiveData.value = NetworkResult.Error(503, "Invalid Action")
-                else -> signUpResponseLiveData.value = NetworkResult.Error(response.code(),"Something went wrong\nError code ${response.code()}")
+                else -> signUpResponseLiveData.value = NetworkResult.Error(response.code(),"Something went wrong\nError code: ${response.code()}")
             }
         }
         catch (e : Exception){
