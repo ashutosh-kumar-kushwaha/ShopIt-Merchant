@@ -1,0 +1,304 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.auth.signUp.SignUpFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ashutosh.shopit.merchant.ui.auth.signUp.SignUpViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/selectGenderTxtVw"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_104"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Select your gender"
+                    android:textColor="@color/black"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/genderLL"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_160"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/selectGenderTxtVw">
+
+                    <ImageView
+                        android:id="@+id/manImgVw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/man" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/womanImgVw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/woman" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/whatIsYourNameTxtVw"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:fontFamily="@font/montserrat"
+                    android:text="What is your name?"
+                    android:textColor="@color/black"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/sp_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/genderLL" />
+
+                <TextView
+                    android:id="@+id/callULaterTxtVw"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:fontFamily="@font/montserrat"
+                    android:text="We need to call you later"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/whatIsYourNameTxtVw" />
+
+                <LinearLayout
+                    android:id="@+id/nameLL"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/callULaterTxtVw">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/firstNameETxt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/textbox_background"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="First name"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dp_12"
+                        android:paddingEnd="@dimen/dp_12"
+                        android:text="@={viewModel.firstNameLiveData}"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/color2"
+                        android:textCursorDrawable="@drawable/cursor_2"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastNameETxt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_14"
+                        android:layout_weight="1"
+                        android:background="@drawable/textbox_background"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="Last name"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dp_12"
+                        android:paddingEnd="@dimen/dp_12"
+                        android:text="@={viewModel.lastNameLiveData}"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/color2"
+                        android:textCursorDrawable="@drawable/cursor_2"
+                        android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/setupPasswordTxtVw"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nameLL">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Set up Password"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/sp_16" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_24"
+                        android:layout_height="@dimen/dp_24"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:src="@drawable/question" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password1Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setupPasswordTxtVw"
+                    app:passwordToggleDrawable="@drawable/show_hide_password"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password1ETxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/textbox_background"
+                        android:drawableStart="@drawable/lock"
+                        android:drawablePadding="@dimen/dp_16"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="Password"
+                        android:textColorHint="@color/color2"
+                        android:maxLines="1"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/dp_16"
+                        android:text="@={viewModel.password1LiveData}"
+                        android:textColor="@color/color2"
+                        android:textSize="@dimen/sp_14"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:textCursorDrawable="@drawable/cursor_2"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password2Layout"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/password1Layout"
+                    app:passwordToggleDrawable="@drawable/show_hide_password"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password2ETxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/textbox_background"
+                        android:drawableStart="@drawable/lock"
+                        android:drawablePadding="@dimen/dp_16"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="Confirm Password"
+                        android:textColorHint="@color/color2"
+                        android:maxLines="1"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/dp_16"
+                        android:text="@={viewModel.password2LiveData}"
+                        android:textColor="@color/color2"
+                        android:textSize="@dimen/sp_14"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:textCursorDrawable="@drawable/cursor_2"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/createAccountBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_54"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Create Account"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/sp_16"
+                    app:backgroundTint="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/password2Layout" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_72"
+                    android:layout_marginBottom="@dimen/dp_24"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/shopit_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createAccountBtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_92"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="@dimen/dp_31"
+                android:scaleType="fitXY"
+                android:src="@drawable/background_element" />
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
