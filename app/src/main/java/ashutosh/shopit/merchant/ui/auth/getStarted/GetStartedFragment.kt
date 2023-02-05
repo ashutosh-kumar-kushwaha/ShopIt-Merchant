@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +46,26 @@ class GetStartedFragment : Fragment() {
     private lateinit var gso : GoogleSignInOptions
     private lateinit var gsc : GoogleSignInClient
 
+    private var startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+
+            try{
+                task.getResult(ApiException::class.java)
+                val account = GoogleSignIn.getLastSignedInAccount(requireContext())
+
+                if(account?.idToken != null) {
+                    lifecycleScope.launch {
+                        getStartedViewModel.googleSignIn(account.idToken!!)
+                    }
+                }
+            }
+            catch (e : Exception){
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,7 +92,7 @@ class GetStartedFragment : Fragment() {
             }
         }
 
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestIdToken("1084765789984-87pi66fb0jaur5gphrf7tnck4p53pue6.apps.googleusercontent.com").build()
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestIdToken("1033758573039-rqhrf180h4kh7h0f1fob9gleq3oe4hm7.apps.googleusercontent.com").build()
         gsc = GoogleSignIn.getClient(requireActivity(), gso)
 
         binding.googleBtn.setOnClickListener {
@@ -84,29 +106,7 @@ class GetStartedFragment : Fragment() {
 
     private fun signInWithGoogle() {
         val signInWithGoogleIntent = gsc.signInIntent
-        startActivityForResult(signInWithGoogleIntent, 1000)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == 1000 && resultCode == Activity.RESULT_OK){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            try{
-                task.getResult(ApiException::class.java)
-                val account = GoogleSignIn.getLastSignedInAccount(requireContext())
-
-                if(account?.idToken != null) {
-                    lifecycleScope.launch {
-                        getStartedViewModel.googleSignIn(account.idToken!!)
-                    }
-                }
-            }
-            catch (e : Exception){
-                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
+        startForResult.launch(signInWithGoogleIntent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

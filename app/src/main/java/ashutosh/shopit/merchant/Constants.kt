@@ -1,4 +1,4 @@
-package ashutosh.shopit
+package ashutosh.shopit.merchant
 
 object Constants {
     const val baseUrl = "https://www.shopitanywhere.live/"

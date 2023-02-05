@@ -1,16 +1,21 @@
 package ashutosh.shopit.merchant.ui.auth.login
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +49,26 @@ class LoginFragment : Fragment() {
     private var _progressBarBinding : ProgressBarBinding? = null
     private val progressBarBinding get() = _progressBarBinding!!
 
+    private var startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
+        if(result.resultCode == RESULT_OK){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+
+            try{
+                task.getResult(ApiException::class.java)
+                val account = GoogleSignIn.getLastSignedInAccount(requireContext())
+
+                if(account?.idToken != null) {
+                    lifecycleScope.launch {
+                        loginViewModel.googleSignIn(account.idToken!!)
+                    }
+                }
+            }
+            catch (e : Exception){
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +85,7 @@ class LoginFragment : Fragment() {
         progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressBar.setCanceledOnTouchOutside(false)
 
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestIdToken("1084765789984-87pi66fb0jaur5gphrf7tnck4p53pue6.apps.googleusercontent.com").build()
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestIdToken("1033758573039-rqhrf180h4kh7h0f1fob9gleq3oe4hm7.apps.googleusercontent.com").build()
         gsc = GoogleSignIn.getClient(requireActivity(), gso)
 
         binding.googleBtn.setOnClickListener {
@@ -88,30 +113,10 @@ class LoginFragment : Fragment() {
 
     private fun signInWithGoogle() {
         val signInWithGoogleIntent = gsc.signInIntent
-        startActivityForResult(signInWithGoogleIntent, 1000)
+        startForResult.launch(signInWithGoogleIntent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 1000 && resultCode == Activity.RESULT_OK){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            try{
-                task.getResult(ApiException::class.java)
-                val account = GoogleSignIn.getLastSignedInAccount(requireContext())
-
-                if(account?.idToken != null) {
-                    lifecycleScope.launch {
-                        loginViewModel.googleSignIn(account.idToken!!)
-                    }
-                }
-            }
-            catch (e : Exception){
-                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -134,6 +139,7 @@ class LoginFragment : Fragment() {
 
                 is NetworkResult.Error -> {
                     progressBar.dismiss()
+                    Log.d("Ashu", it.message.toString())
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
 

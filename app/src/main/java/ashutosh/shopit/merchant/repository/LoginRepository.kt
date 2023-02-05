@@ -1,5 +1,6 @@
 package ashutosh.shopit.merchant.repository
 
+import android.util.Log
 import ashutosh.shopit.merchant.SingleLiveEvent
 import ashutosh.shopit.merchant.api.RetrofitAPI
 import ashutosh.shopit.merchant.api.NetworkResult
@@ -40,6 +41,7 @@ class LoginRepository @Inject constructor(private val retrofitAPI: RetrofitAPI) 
 
     suspend fun signGoogle(token : String){
         loginResponseLiveData.value = NetworkResult.Loading()
+        Log.d("Ashu", "A")
         try{
             val response = retrofitAPI.signGoogle(token)
             when(response.code()){

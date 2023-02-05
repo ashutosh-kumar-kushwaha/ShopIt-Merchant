@@ -213,21 +213,24 @@
                     app:layout_constraintStart_toEndOf="@+id/signUpWithTxtVw"
                     app:layout_constraintTop_toTopOf="@+id/signUpWithTxtVw" />
 
-                <LinearLayout
-                    android:id="@+id/googleLL"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_54"
-                    android:layout_marginStart="@dimen/dp_24"
-                    android:layout_marginTop="@dimen/dp_24"
-                    android:layout_marginEnd="@dimen/dp_24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/signUpWithTxtVw">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/googleLL"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="@dimen/dp_54"-->
+<!--                    android:layout_marginStart="@dimen/dp_24"-->
+<!--                    android:layout_marginTop="@dimen/dp_24"-->
+<!--                    android:layout_marginEnd="@dimen/dp_24"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/signUpWithTxtVw">-->
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/googleBtn"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dp_54"
+                        android:layout_marginStart="@dimen/dp_24"
+                        android:layout_marginTop="@dimen/dp_24"
+                        android:layout_marginEnd="@dimen/dp_24"
                         android:layout_weight="1"
                         android:background="@drawable/textbox_background"
                         android:fontFamily="@font/montserrat"
@@ -238,17 +241,14 @@
                         app:backgroundTint="@null"
                         app:icon="@drawable/ic_google"
                         app:iconSize="@dimen/dp_24"
-                        app:iconTint="@null" />
+                        app:iconTint="@null"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/signUpWithTxtVw" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="@dimen/dp_54"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/dp_26"
-                        android:background="@drawable/up"
-                        app:backgroundTint="@null" />
 
-                </LinearLayout>
-                
+<!--                </LinearLayout>-->
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_16"
@@ -257,7 +257,7 @@
                     android:layout_marginBottom="@dimen/dp_24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/googleLL"
+                    app:layout_constraintTop_toBottomOf="@id/googleBtn"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
