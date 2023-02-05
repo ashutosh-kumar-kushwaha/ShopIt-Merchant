@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ashutosh.shopit.merchant.R
 import ashutosh.shopit.merchant.adapters.ProductsParentAdapter
@@ -39,6 +40,10 @@ class HomeFragment : Fragment() {
         binding.productsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         homeViewModel.getCategories()
+
+        binding.addProductBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_selectCategoryFragment)
+        }
 
         return binding.root
     }

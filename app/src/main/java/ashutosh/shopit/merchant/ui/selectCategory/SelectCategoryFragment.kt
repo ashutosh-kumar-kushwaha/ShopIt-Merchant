@@ -14,7 +14,9 @@ import ashutosh.shopit.merchant.adapters.CategoryAdapter
 import ashutosh.shopit.merchant.api.NetworkResult
 import ashutosh.shopit.merchant.databinding.FragmentSelectCategoryBinding
 import ashutosh.shopit.merchant.interfaces.CategoryClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SelectCategoryFragment : Fragment() {
 
     private var _binding: FragmentSelectCategoryBinding? = null

@@ -78,6 +78,11 @@ interface RetrofitAPI {
     @POST("products/review/add/{productId}")
     suspend fun addReview(@Path("productId") productId: Int, @Part images: List<MultipartBody.Part>, @Part("reviewDto") review: RequestBody) : Response<AddReviewResponse>
 
+    @Multipart
+    @Headers("isAuthorized: true")
+    @POST("products/add/{categoryId}")
+    suspend fun addProduct(@Path("categoryId") categoryId: Int, @Part images: List<MultipartBody.Part>, @Part("productDto") productDetails: RequestBody) : Response<AddProductResponse>
+
     //Category
 
     @Headers("isAuthorized: true")

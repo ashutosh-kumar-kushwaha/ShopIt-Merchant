@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -24,8 +25,10 @@ import ashutosh.shopit.merchant.URIPathHelper
 import ashutosh.shopit.merchant.adapters.DescriptionAdapter
 import ashutosh.shopit.merchant.adapters.ImageAdapter
 import ashutosh.shopit.merchant.adapters.SpecificationAdapter
+import ashutosh.shopit.merchant.api.NetworkResult
 import ashutosh.shopit.merchant.databinding.FragmentAddProductBinding
 import ashutosh.shopit.merchant.models.*
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +67,8 @@ class AddProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
+        binding.viewModel = addProductViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.productSpecsRecyclerView.adapter = specificationAdapter
         binding.productSpecsRecyclerView.layoutManager =
@@ -91,11 +96,14 @@ class AddProductFragment : Fragment() {
             descriptionAdapter.notifyDataSetChanged()
         }
 
+        if(arguments?.getInt("categoryId") != null){
+            addProductViewModel.categoryId = arguments?.getInt("categoryId")!!
+        }
+
 
 
         binding.addProductBtn.setOnClickListener {
-            Log.d("Ashu", specificationAdapter.specificationList.toString())
-            Log.d("Ashu", descriptionAdapter.descriptionList.toString())
+            upload()
         }
 
         binding.addImagesBtn.setOnClickListener {
@@ -177,9 +185,26 @@ class AddProductFragment : Fragment() {
             descriptionAdapter.descriptionList,
             listOf()
         )
+        Log.d("Ashu", addProductRequest.toString())
         val addProductJson = Gson().toJson(addProductRequest)
         val addProductRequestBody = addProductJson.toString().toRequestBody("application/json".toMediaTypeOrNull())
-//        addProductViewModel.
+        addProductViewModel.addProduct(images, addProductRequestBody)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        addProductViewModel.addProductResponse.observe(viewLifecycleOwner){
+            when(it){
+                is NetworkResult.Success -> {
+                    Toast.makeText(requireContext(), it.data?.message, Toast.LENGTH_SHORT).show()
+                }
+                is NetworkResult.Loading -> {}
+                is NetworkResult.Error -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

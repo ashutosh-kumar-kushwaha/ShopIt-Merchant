@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/addProductFragment">
+    app:startDestination="@id/homeFragment">
 
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="ashutosh.shopit.merchant.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_selectCategoryFragment"
+            app:destination="@id/selectCategoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addProductFragment"
         android:name="ashutosh.shopit.merchant.ui.addProduct.AddProductFragment"
