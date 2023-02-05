@@ -3,11 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/addProductFragment">
 
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="ashutosh.shopit.merchant.ui.home.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="ashutosh.shopit.merchant.ui.addProduct.AddProductFragment"
+        android:label="AddProductFragment" />
+    <fragment
+        android:id="@+id/selectCategoryFragment"
+        android:name="ashutosh.shopit.merchant.ui.selectCategory.SelectCategoryFragment"
+        android:label="fragment_select_category"
+        tools:layout="@layout/fragment_select_category" >
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
 </navigation>
