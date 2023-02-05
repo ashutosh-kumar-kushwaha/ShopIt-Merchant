@@ -177,7 +177,7 @@ class AddProductFragment : Fragment() {
             addProductViewModel.originalPrice.value!!,
             addProductViewModel.offerPercentage.value!!,
             addProductViewModel.quantity.value!!,
-            listOf(),
+            listOf(OfferX("XYZ", "XYZ"), OfferX("XYZ", "XYZ")),
             addProductViewModel.warranty.value!!,
             "",
             "",
