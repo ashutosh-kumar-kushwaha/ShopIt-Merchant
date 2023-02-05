@@ -3,77 +3,54 @@ package ashutosh.shopit.merchant.repository
 import ashutosh.shopit.merchant.SingleLiveEvent
 import ashutosh.shopit.merchant.api.RetrofitAPI
 import ashutosh.shopit.merchant.api.NetworkResult
-import ashutosh.shopit.merchant.models.AdvertisementResponse
-import ashutosh.shopit.merchant.models.CategoryResponse
-import ashutosh.shopit.merchant.models.ProductsResponse
+import ashutosh.shopit.merchant.models.*
 import javax.inject.Inject
 
 class HomePageRepository @Inject constructor(private val retrofitAPI: RetrofitAPI) {
 
-    val getProductsResponseLiveData = SingleLiveEvent<NetworkResult<ProductsResponse>>()
-    val getCategoriesResponseLiveData = SingleLiveEvent<NetworkResult<CategoryResponse>>()
+    val productsResponse = SingleLiveEvent<NetworkResult<ProductsParentContent>>()
+    val categoriesResponse = SingleLiveEvent<NetworkResult<CategoryResponse>>()
     val getAdvertisementResponseLiveData = SingleLiveEvent<NetworkResult<AdvertisementResponse>>()
 
-    suspend fun getProductsByCategory(categoryId : Int){
-        getProductsResponseLiveData.value = NetworkResult.Loading()
+    suspend fun getProductsByCategory(category : Category){
+        productsResponse.value = NetworkResult.Loading()
         try{
-            val response = retrofitAPI.getProductsByCategory(categoryId)
+            val response = retrofitAPI.getProductsByCategory(category.categoryId)
             when(response.code()){
                 200 -> {
                     if(response.body() != null){
-                        getProductsResponseLiveData.value = NetworkResult.Success(200, response.body()!!)
+                        productsResponse.value = NetworkResult.Success(200, ProductsParentContent(category, response.body()!!.content))
                     }
                     else{
-                        getProductsResponseLiveData.value = NetworkResult.Error(200, "Something went wrong!\nResponse is null")
+                        productsResponse.value = NetworkResult.Error(200, "Something went wrong!\nResponse is null")
                     }
                 }
-                else -> getProductsResponseLiveData.value = NetworkResult.Error(response.code(), "Something went wrong!\nError code: ${response.code()}")
+                else -> productsResponse.value = NetworkResult.Error(response.code(), "Something went wrong!\nError code: ${response.code()}")
             }
         }
         catch (e: Exception){
-            getProductsResponseLiveData.value = NetworkResult.Error(-1, e.message)
+            productsResponse.value = NetworkResult.Error(-1, e.message)
         }
     }
 
     suspend fun getCategories(){
-        getCategoriesResponseLiveData.value = NetworkResult.Loading()
+        categoriesResponse.value = NetworkResult.Loading()
         try{
             val response = retrofitAPI.getCategory()
             if(response.code() == 200){
                 if(response.body() != null){
-                    getCategoriesResponseLiveData.value = NetworkResult.Success(200, response.body()!!)
+                    categoriesResponse.value = NetworkResult.Success(200, response.body()!!)
                 }
                 else{
-                    getCategoriesResponseLiveData.value = NetworkResult.Error(200, "Something went wrong!\nResponse is null")
+                    categoriesResponse.value = NetworkResult.Error(200, "Something went wrong!\nResponse is null")
                 }
             }
             else{
-                getCategoriesResponseLiveData.value = NetworkResult.Error(response.code(), "Something went wrong!\nError code: ${response.code()}")
+                categoriesResponse.value = NetworkResult.Error(response.code(), "Something went wrong!\nError code: ${response.code()}")
             }
         }
         catch(e: Exception){
-            getCategoriesResponseLiveData.value = NetworkResult.Error(-1, e.message)
-        }
-    }
-
-    suspend fun getAllProducts(){
-        getProductsResponseLiveData.value = NetworkResult.Loading()
-        try{
-            val response = retrofitAPI.getAllProducts()
-            if(response.code() == 200){
-                if(response.body()!=null){
-                    getProductsResponseLiveData.value = NetworkResult.Success(200, response.body()!!)
-                }
-                else{
-                    getProductsResponseLiveData.value = NetworkResult.Error(200, "Something went wrong!\nResponse is null")
-                }
-            }
-            else{
-                getProductsResponseLiveData.value = NetworkResult.Error(response.code(), "Something went wrong!\nError code: ${response.code()}")
-            }
-        }
-        catch (e: Exception){
-            getProductsResponseLiveData.value = NetworkResult.Error(-1, e.message)
+            categoriesResponse.value = NetworkResult.Error(-1, e.message)
         }
     }
 

@@ -6,4 +6,8 @@
     app:startDestination="@id/homeFragment">
 
 
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ashutosh.shopit.merchant.ui.home.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>
