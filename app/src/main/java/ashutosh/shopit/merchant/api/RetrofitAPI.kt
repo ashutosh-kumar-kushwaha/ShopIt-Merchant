@@ -49,11 +49,11 @@ interface RetrofitAPI {
 
     //Product
 
-    @Headers("isAuthorized: false")
+    @Headers("isAuthorized: true")
     @GET("products/getProductsByCategory/{categoryId}?pageNumber=0&pageSize=100")
     suspend fun getProductsByCategory(@Path("categoryId") categoryId : Int, @Query("sortBy") sortBy: String = "productId", @Query("sortDir") sortDir: String = "dsc") : Response<ProductsResponse>
 
-    @Headers("isAuthorized: false")
+    @Headers("isAuthorized: true")
     @GET("products/get?pageNumber=0&pageSize=100")
     suspend fun getAllProducts() : Response<ProductsResponse>
 
@@ -80,7 +80,7 @@ interface RetrofitAPI {
 
     //Category
 
-    @Headers("isAuthorized: false")
+    @Headers("isAuthorized: true")
     @GET("category/get?pageSize=5")
     suspend fun getCategory() : Response<CategoryResponse>
 
