@@ -1,7 +1,7 @@
 package ashutosh.shopit.merchant.di
 
 import android.content.Context
-import ashutosh.shopit.Constants
+import ashutosh.shopit.merchant.Constants
 import ashutosh.shopit.merchant.api.AuthAuthenticator
 import ashutosh.shopit.merchant.api.AuthInterceptor
 import ashutosh.shopit.merchant.api.RetrofitAPI

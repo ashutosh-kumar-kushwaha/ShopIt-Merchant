@@ -1,7 +1,7 @@
 package ashutosh.shopit.merchant.api
 
 import android.util.Log
-import ashutosh.shopit.Constants
+import ashutosh.shopit.merchant.Constants
 import ashutosh.shopit.merchant.datastore.DataStoreManager
 import ashutosh.shopit.merchant.models.LoginResponse
 import kotlinx.coroutines.flow.first
